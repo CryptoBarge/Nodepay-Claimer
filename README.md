@@ -36,7 +36,7 @@
 
 ### 📁 config.json
 
-```json
+```json5
   "THREADS": 3,
   "USE_PROXY": false,
   "RPC_ENDPOINT": "",       // If empty solana rpc will be used: https://api.mainnet-beta.solana.com
