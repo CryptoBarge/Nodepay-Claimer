@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "@devhigley/parse-proxy": "^1.0.3",
+    "@solana/spl-token": "^0.4.9",
+    "@solana/web3.js": "^1.98.0",
+    "@types/node": "^22.10.10",
+    "axios": "^1.7.9",
+    "blessed": "^0.1.81",
+    "bs58": "^6.0.0",
+    "chalk": "^5.4.1",
+    "https-proxy-agent": "^7.0.6",
+    "json5": "^2.2.3",
+    "node-color-log": "^12.0.1",
+    "strip-json-comments": "^5.0.1"
+  },
+  "imports": {
+    "#root/*.js": "./*.js"
+  }
+}
