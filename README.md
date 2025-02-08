@@ -7,7 +7,6 @@
   <p align="center">
     <a href="https://t.me/BargeCrypto"><img src="https://img.shields.io/badge/CryptoBarge_|_Subscribe_⚓-5B00FF?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram Channel"></a>
     <a href="https://t.me/+nbpTp74UTnVmMmM6"><img src="https://img.shields.io/badge/Crypto$БАРЖА_|_Chat_💬-5B00FF?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram Chat"></a>
-<p
 </div>
 
 ## 🔎 Navigation
@@ -40,8 +39,8 @@
   "THREADS": 3,
   "USE_PROXY": false,
   "RPC_ENDPOINT": "",       // If empty solana rpc will be used: https://api.mainnet-beta.solana.com;
-  "VAULT_WALLET": "",       // Main wallet address public key;
-  "MASTER_WALLET": "",      // Private key; There should be a solana on this wallet. (~0.000005 SOL for one wallet from wallet.txt);
+  "VAULT_WALLET": "",       // Main wallet address PUBLIC KEY; Recommended to have Nodecoin($NC) on this wallet;
+  "MASTER_WALLET": "",      // PRIVAT KEY; There should be a solana on this wallet. (~0.000005 SOL for one wallet from wallet.txt);
   "TIP_AMOUNT": 0.1,        // 0.1 = 10%, if >0.05 = 0.05(5%);
   "MIN_TOKEN_AMOUNT": 20    // Filters wallets by token balance;
 ```
@@ -66,6 +65,8 @@ socks5://user:pass@ip:port
 
 - 💸 **MultiSend $NC** - Sends tokens $NC from wallets.txt to VAULT_WALLET.
 - 💰 **Consecutive-claim** - Claims your tokens from wallets.txt, sends $NC to VAULT_WALLET, closes ATA, and sends the entire $SOL balance to the next wallet. (_You need to have enough Solana in the first wallet from wallets.txt; 🔥**Expenses**: ~ **0.0027898** SOL🔥 per wallet. For the module to work correctly, you need to enter at least 2 wallets in wallets.txt_)
+<br><br>**RECOMMENDED**: Before starting to use the mode, send **1 Nodecoin($NC)** to the address that you plan to specify as VAULT_WALLET. <br>If the wallet specified in VAULT_WALLET does not have Nodecoin, an additional **-0.00203928 SOL** will be debited for opening ATA for this wallet.
+
 - 🧲 **Claim $NC** - Claims all available tokens for a wallet.
 - 💲 **ClaimYourSol** - Closes ATA from wallets.txt, redeems the fee, and sends $SOL to VAULT_WALLET. FeePayer - MASTER_WALLET. (_If there is no $SOL in the wallets, the transaction fee will be paid by MASTER_WALLET._)
 - 🧮 **TokenCheker** - Filters wallets from wallets.txt by MIN_TOKEN_AMOUNT tokens and writes the result to checked_wallets.txt
