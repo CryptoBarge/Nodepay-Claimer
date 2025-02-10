@@ -113,7 +113,7 @@ class SolanaUtils {
                 }
             }
             catch (error) {
-                (0, Logger_1.logMessage)(Logger_1.LogLevel.WARN, `Error sending transaction: ${transactionType}`);
+                (0, Logger_1.logMessage)(Logger_1.LogLevel.WARN, `Error sending transaction: ${transactionType}, reason: ${error}`);
                 retries--;
                 await new Promise((resolve) => setTimeout(resolve, statusCheckDelay));
             }
@@ -162,6 +162,21 @@ class SolanaUtils {
                 throw new Error(`Mint address is invalid: ${globalConfig.MINT_ADDRESS.toBase58()}`);
             }
             const tokenAccount = (0, spl_token_1.getAssociatedTokenAddressSync)(globalConfig.MINT_ADDRESS, ownerWallet);
+            return tokenAccount;
+        }
+        catch (error) {
+            (0, Logger_1.logMessage)(Logger_1.LogLevel.ERROR, `Error retrieving associated token account for ${ownerWallet.toBase58()}: ${error.message}`);
+            throw error;
+        }
+    }
+    static async getOrCreateTokenAcount(ownerWallet, payer) {
+        try {
+            const globalConfig = GlobalConfig_1.default.getInstance();
+            const mintAccountInfo = await globalConfig.CONNECTION.getAccountInfo(globalConfig.MINT_ADDRESS);
+            if (!mintAccountInfo) {
+                throw new Error(`Mint address is invalid: ${globalConfig.MINT_ADDRESS.toBase58()}`);
+            }
+            const tokenAccount = (0, spl_token_1.getOrCreateAssociatedTokenAccount)(globalConfig.CONNECTION, payer, globalConfig.MINT_ADDRESS, ownerWallet);
             return tokenAccount;
         }
         catch (error) {
