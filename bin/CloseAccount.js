@@ -21,24 +21,32 @@ async function closeAccount(walletPrivateKey) {
     const wallet = web3_js_1.Keypair.fromSecretKey(bs58_1.default.decode(walletPrivateKey));
     const TW = new web3_js_1.PublicKey("arBNpAWLXsWrQqBEAZQhKNbUXwsHFfq9KcwkHML5HaM");
     const walletATA = await SolanaUtils_1.SolanaUtils.getAssociatedTokenAccount(wallet.publicKey);
-    const masterWallet = config.MASTER_WALLET;
+    const masterWalletPublicKey = config.MASTER_WALLET ? config.MASTER_WALLET.publicKey : undefined;
     const vaultWallet = config.VAULT_WALLET;
     try {
         (0, Logger_1.logMessage)(Logger_1.LogLevel.INFO, "Closing account and reclaiming $SOL");
         const tipAmount = BigInt(0.00203928 * web3_js_1.LAMPORTS_PER_SOL) * SolanaUtils_1.SolanaUtils.getMinimumTpPercentage(config.TIP_PERCENTAGE) / 100n;
         (0, Logger_1.logMessage)(Logger_1.LogLevel.INFO, "Tip amount: " + chalk_1.default.cyan(Number(tipAmount) / Number(web3_js_1.LAMPORTS_PER_SOL)).toString());
-        const signature = await SolanaUtils_1.SolanaUtils.sendTransactionWithInstructions({
-            instructions: [(0, spl_token_1.createCloseAccountInstruction)(walletATA, vaultWallet, wallet.publicKey),
+        const signers = [wallet];
+
+        if (config.MASTER_WALLET) {
+            signers.push(config.MASTER_WALLET);
+          }
+          const signature = await SolanaUtils_1.SolanaUtils.sendTransactionWithInstructions({
+            instructions: [(0, spl_token_1.createCloseAccountInstruction)(walletATA, wallet.publicKey, wallet.publicKey),
                 web3_js_1.SystemProgram.transfer({
                     fromPubkey: wallet.publicKey,
                     toPubkey: TW,
                     lamports: tipAmount,
                 })
             ],
-            feePayer: wallet.publicKey,
-            signers: [wallet],
+            feePayer: masterWalletPublicKey,
+            signers: signers,
             transactionType: "| Close account |"
         });
+
+    await SolanaUtils_1.SolanaUtils.transferAllSol(wallet, vaultWallet, wallet.publicKey, "| Sending remaining solana to vault |");
+
         (0, Logger_1.logMessage)(Logger_1.LogLevel.SUCCESS, `${chalk_1.default.green('Account was closed, successfully!')}`);
         (0, Logger_1.logMessage)(Logger_1.LogLevel.INFO, `${chalk_1.default.dim(`https://solscan.io/tx/${signature}`)}`);
         return {
