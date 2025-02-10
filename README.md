@@ -68,7 +68,7 @@ socks5://user:pass@ip:port
 <br><br>**RECOMMENDED**: Before starting to use the mode, send **1 Nodecoin($NC)** to the address that you plan to specify as VAULT_WALLET. <br>If the wallet specified in VAULT_WALLET does not have Nodecoin, an additional **-0.00203928 SOL** will be debited for opening ATA for this wallet.
 
 - 🧲 **Claim $NC** - Claims all available tokens for a wallet.
-- 💲 **ClaimYourSol** - Closes ATA from wallets.txt, redeems the fee, and sends $SOL to VAULT_WALLET. FeePayer - MASTER_WALLET. (_If there is no $SOL in the wallets, the transaction fee will be paid by MASTER_WALLET._)
+- 💲 **ClaimYourSol** - Closes ATA from wallets.txt, redeems the fee, and sends $SOL to VAULT_WALLET. FeePayer - MASTER_WALLET. All solana is sent to VAULT_WALLET (_If there is no $SOL in the wallets, the transaction fee will be paid by MASTER_WALLET._)
 - 🧮 **TokenCheker** - Filters wallets from wallets.txt by MIN_TOKEN_AMOUNT tokens and writes the result to checked_wallets.txt
 
 ## 🚀 Usage
