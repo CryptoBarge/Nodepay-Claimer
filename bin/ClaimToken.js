@@ -107,7 +107,7 @@ async function claimNode(privateKey, walletNumber) {
                 }
                 try {
                     await SolanaUtils_js_1.SolanaUtils.sendTransactionWithInstructions({ instructions: instructions, feePayer: walletKeyPair.publicKey, signers: [walletKeyPair], transactionType: "| Claim token |" });
-                    (0, Logger_1.logMessage)(Logger_1.LogLevel.SUCCESS, chalk_1.default.green(`Claiming process completed, successfully!`));
+                    (0, Logger_1.logMessage)(Logger_1.LogLevel.INFO, `Claim tokens was successfully`);
                     return {
                         wallet: privateKey,
                         status: 'Success',
