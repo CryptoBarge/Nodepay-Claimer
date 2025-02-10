@@ -64,11 +64,11 @@ socks5://user:pass@ip:port
 ## ⚠️ Important Notes
 
 - 💸 **MultiSend $NC** - Sends tokens $NC from wallets.txt to VAULT_WALLET.
-- 💰 **Consecutive-claim** - Claims your tokens from wallets.txt, sends $NC to VAULT_WALLET, closes ATA, and sends the entire $SOL balance to the next wallet. (_You need to have enough Solana in the first wallet from wallets.txt; 🔥**Expenses**: ~ **0.0027898** SOL🔥 per wallet. For the module to work correctly, you need to enter at least 2 wallets in wallets.txt_)
+- 💰 **Consecutive-claim** - Claims tokens from wallets.txt, sends them to the VAULT_WALLET address, closes the Associated Token Account, and transfers all remaining $SOL to the next wallet. <br><br>**NOTE**: The first wallet in wallets.txt must have enough SOL to cover all imported wallets. The cost of claiming tokens for one wallet is 🔥**0.0027898 SOL**🔥, but the wallet balance should not be less than ~0.05 SOL. Plan ahead so that the second-to-last wallet has at least ~0.025 SOL remaining. For convenience, set your **main wallet** as the last one.
 <br><br>**RECOMMENDED**: Before starting to use the mode, send **1 Nodecoin($NC)** to the address that you plan to specify as VAULT_WALLET. <br>If the wallet specified in VAULT_WALLET does not have Nodecoin, an additional **-0.00203928 SOL** will be debited for opening ATA for this wallet.
 
 - 🧲 **Claim $NC** - Claims all available tokens for a wallet.
-- 💲 **ClaimYourSol** - Closes ATA from wallets.txt, redeems the fee, and sends $SOL to VAULT_WALLET. FeePayer - MASTER_WALLET. (_If there is no $SOL in the wallets, the transaction fee will be paid by MASTER_WALLET._)
+- 💲 **ClaimYourSol** - Closes the Associated Token Account on wallets from **wallets.txt**. There are several possible scenarios: <br><br>1️⃣ If all wallets have a **0 SOL balance**, you need to enter the private key of a wallet with SOL into the **MASTER_WALLET** field in **config.json**. In this case, **MASTER_WALLET** covers the transaction fee (~**0.000005 SOL**), and all SOL obtained from closing the accounts is sent to **VAULT_WALLET**. **VAULT_WALLET** can be either the same wallet as **MASTER_WALLET** or any other public key of your choice. <br><br>2️⃣If the wallets in **wallets.txt** have SOL but the **MASTER_WALLET** field is left empty, each wallet pays its own transaction fee. The SOL obtained from closing the accounts is sent to **VAULT_WALLET**. <br><br>**NOTE**: The tokens must be **absent** from the balance. In **VAULT_WALLET**, enter a public key. In **MASTER_WALLET**, enter a private key.
 - 🧮 **TokenCheker** - Filters wallets from wallets.txt by MIN_TOKEN_AMOUNT tokens and writes the result to checked_wallets.txt
 
 ## 🚀 Usage
