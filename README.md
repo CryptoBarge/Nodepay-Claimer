@@ -40,7 +40,7 @@
   "USE_PROXY": false,
   "RPC_ENDPOINT": "",       // If empty solana rpc will be used: https://api.mainnet-beta.solana.com;
   "VAULT_WALLET": "",       // Main wallet address PUBLIC KEY; Recommended to have Nodecoin($NC) on this wallet;
-  "MASTER_WALLET": "",      // PRIVAT KEY; There should be a solana on this wallet. (~0.000005 SOL for one wallet from wallet.txt);
+  "MASTER_WALLET": "",      // PRIVATE KEY; There should be a solana on this wallet. (~0.000005 SOL for one wallet from wallet.txt);
   "TIP_AMOUNT": 0.1,        // 0.1 = 10%, if >0.05 = 0.05(5%);
   "MIN_TOKEN_AMOUNT": 20    // Filters wallets by token balance;
 ```
