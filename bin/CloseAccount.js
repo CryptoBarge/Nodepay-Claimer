@@ -63,4 +63,3 @@ async function closeAccount(walletPrivateKey) {
         };
     }
 }
-//# sourceMappingURL=CloseAccount.js.map
