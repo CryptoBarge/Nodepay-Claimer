@@ -78,7 +78,7 @@ async function getTransactionData(wallet, log = true) {
 async function claimNode(privateKey, walletNumber) {
     const walletKeyPair = web3_js_1.Keypair.fromSecretKey(bs58_1.default.decode(privateKey));
     try {
-        let tokenBalance = await TokenChecker_js_1.TokenChecker.getBalance(walletKeyPair.publicKey);
+        let tokenBalance = await (0, TokenChecker_js_1.getBalance)(walletKeyPair.publicKey);
         if (tokenBalance <= 0) {
             (0, Logger_1.logMessage)(Logger_1.LogLevel.INFO, (0, Logger_1.messageWithWallet)(walletNumber, 'Skipping... Wallet alredy claimed or no token for claim'));
             return {
@@ -136,10 +136,9 @@ async function claimTokenBatch() {
     const config = GlobalConfig_js_1.default.getInstance();
     const wallets = config.WALLETS;
     try {
-        await (0, Utils_js_1.batchProcess)(wallets, claimNode, config.THREADS);
+        await (0, Utils_js_1.batchProcess)(wallets, claimNode, config.THREADS, 5000, "claim token");
     }
     catch (error) {
         (0, Logger_1.logMessage)(Logger_1.LogLevel.ERROR, 'Critical error:' + error);
     }
 }
-//# sourceMappingURL=ClaimToken.js.map
