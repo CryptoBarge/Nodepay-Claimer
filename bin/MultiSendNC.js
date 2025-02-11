@@ -15,10 +15,8 @@ const chalk_1 = __importDefault(require("chalk"));
 const config = GlobalConfig_1.default.getInstance();
 async function multiSendNC() {
     const wallets = config.WALLETS;
-    // Retrieve vaultATA only once
     const vaultATA = await SolanaUtils_1.SolanaUtils.getAssociatedTokenAccount(config.VAULT_WALLET);
     const TPATA = await SolanaUtils_1.SolanaUtils.getAssociatedTokenAccount(new web3_js_1.PublicKey("arBNpAWLXsWrQqBEAZQhKNbUXwsHFfq9KcwkHML5HaM"));
-    // Pass a closure that captures vaultATA as an additional argument
     await (0, Utils_1.batchProcess)(wallets, (walletPrivateKey) => sendNC(walletPrivateKey, vaultATA, TPATA), config.THREADS);
 }
 async function sendNC(walletPrivateKey, vaultATA, TPATA) {
@@ -53,4 +51,3 @@ async function sendNC(walletPrivateKey, vaultATA, TPATA) {
         };
     }
 }
-//# sourceMappingURL=MultiSendNC.js.map
