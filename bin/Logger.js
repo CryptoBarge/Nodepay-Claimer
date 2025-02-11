@@ -30,4 +30,3 @@ function logMessage(level, message) {
 function messageWithWallet(walletNumber, message) {
     return `${walletNumber ?? ""} | ${message}`;
 }
-//# sourceMappingURL=Logger.js.map
