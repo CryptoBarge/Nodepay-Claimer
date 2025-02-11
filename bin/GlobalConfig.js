@@ -8,19 +8,15 @@ const bs58_1 = __importDefault(require("bs58"));
 const Utils_1 = require("./Utils");
 const Logger_1 = require("./Logger");
 class GlobalConfig {
-    // Hide the constructor.
     constructor() { }
-    // Singleton getter.
     static getInstance() {
         if (!GlobalConfig.instance) {
             GlobalConfig.instance = new GlobalConfig();
         }
         return GlobalConfig.instance;
     }
-    // Common function for required config values.
-    // If the value is missing, logs an error message and exits the process.
+
     static requireConfigValue(value, errorMessage) {
-        // Check for undefined, null, empty string, or an empty array.
         if (value === undefined ||
             value === null ||
             (typeof value === "string" && value.trim() === "") ||
@@ -30,7 +26,7 @@ class GlobalConfig {
         }
         return value;
     }
-    // Lazy-load and cache the config JSON.
+
     get config() {
         if (!this._config) {
             this._config = (0, Utils_1.loadJSONConfig)("../data/config.json");
@@ -41,10 +37,10 @@ class GlobalConfig {
         }
         return this._config;
     }
-    // Each getter loads its value only on first access
+
     get VAULT_WALLET() {
         if (!this._vaultWallet) {
-            // Use the common function to require a value.
+
             const vaultWalletStr = GlobalConfig.requireConfigValue(this.config.VAULT_WALLET, "Missing VAULT_WALLET in config file (../data/config.json).");
             try {
                 this._vaultWallet = new web3_js_1.PublicKey(vaultWalletStr);
@@ -73,7 +69,7 @@ class GlobalConfig {
     }
     get MINT_ADDRESS() {
         if (!this._mintAddress) {
-            // Hard-coded mint address.
+
             try {
                 this._mintAddress = new web3_js_1.PublicKey("B89Hd5Juz7JP2dxCZXFJWk4tMTcbw7feDhuWGb3kq5qE");
             }
@@ -86,7 +82,7 @@ class GlobalConfig {
     get TIP_PERCENTAGE() {
         if (this._tipPercentage === undefined) {
             const tipAmount = GlobalConfig.requireConfigValue(this.config.TIP_AMOUNT, "Missing TIP_AMOUNT in config file (../data/config.json).");
-            // Convert to basis points (i.e., TIP_AMOUNT * 100).
+
             this._tipPercentage = BigInt(tipAmount * 100);
         }
         return this._tipPercentage;
@@ -147,4 +143,3 @@ class GlobalConfig {
     }
 }
 exports.default = GlobalConfig;
-//# sourceMappingURL=GlobalConfig.js.map
