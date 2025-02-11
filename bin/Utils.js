@@ -116,22 +116,29 @@ async function sendRequest(url, timeout) {
     }
 }
 const RESULTS_DIR = './results';
-const successLog = `success_claim_${Date.now()}.txt`;
-const failedLog = `failed_claim_${Date.now()}.txt`;
-const skippedLog = `skipped_claim_${Date.now()}.txt`;
-function saveResultToFile(result) {
+function getLocalDateTime() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, "0");
+    const day = now.getDate().toString().padStart(2, "0");
+    const hour = now.getHours().toString().padStart(2, "0");
+    const minute = now.getMinutes().toString().padStart(2, "0");
+    const second = now.getSeconds().toString().padStart(2, "0");
+    return `${year}-${month}-${day}_${hour}-${minute}-${second}`;
+}
+function saveResultToFile(result, operationName, batchDateTime) {
     switch (result.status) {
-        case 'Success':
-            appendToFile(successLog, result.wallet);
-            break;
         case 'Error':
-            appendToFile(failedLog, result.wallet);
+            appendToFile(`failed_${operationName}.txt`, result.wallet);
             break;
         case 'Skipped':
-            appendToFile(skippedLog, result.wallet);
+            appendToFile(`skipped_${operationName}.txt`, result.wallet);
+            break;
+        case 'Success':
+            appendToFile(`success_${operationName}.txt`, result.wallet);
             break;
         default:
-            (0, Logger_1.logMessage)(Logger_1.LogLevel.ERROR, `Unexpected status, when saving claim result to log file: ${result.status}`);
+            (0, Logger_1.logMessage)(Logger_1.LogLevel.ERROR, `Unexpected status, when saving ${operationName} result to log file: ${result.status}`);
     }
 }
 async function ensureResultsDirectory() {
@@ -149,6 +156,7 @@ async function appendToFile(filename, content) {
 async function batchProcess(items, operation, threads, delayMs = 2000, operationName = 'operation') {
     try {
         await ensureResultsDirectory();
+        const batchDateTime = getLocalDateTime();
         (0, Logger_1.logMessage)(Logger_1.LogLevel.INFO, `Items to process: ${items.length}`);
         const chunkSize = Math.ceil(items.length / threads);
         const chunks = Array.from({ length: threads }, (_, i) => items.slice(i * chunkSize, (i + 1) * chunkSize)).filter(chunk => chunk.length > 0);
@@ -156,19 +164,19 @@ async function batchProcess(items, operation, threads, delayMs = 2000, operation
             const results = [];
             for (const item of chunk) {
                 const result = await operation(item);
-                saveResultToFile(result);
+                saveResultToFile(result, operationName, batchDateTime);
                 results.push(result);
                 await new Promise(resolve => setTimeout(resolve, delayMs));
             }
             return results;
         }));
         const results = chunkResults.flat();
-        const successful = results.filter(r => r.status === 'Success').length;
         const failed = results.filter(r => r.status === 'Error').length;
         const skipped = results.filter(r => r.status === 'Skipped').length;
-        (0, Logger_1.logMessage)(Logger_1.LogLevel.INFO, `Successfully processed: ${successful}`);
+        const successful = results.filter(r => r.status === 'Success').length;
         (0, Logger_1.logMessage)(Logger_1.LogLevel.INFO, `Failed: ${failed}`);
         (0, Logger_1.logMessage)(Logger_1.LogLevel.INFO, `Skipped: ${skipped}`);
+        (0, Logger_1.logMessage)(Logger_1.LogLevel.INFO, `Successfully processed: ${successful}`);
         return results;
     }
     catch (error) {
@@ -176,4 +184,3 @@ async function batchProcess(items, operation, threads, delayMs = 2000, operation
         throw error;
     }
 }
-//# sourceMappingURL=Utils.js.map
