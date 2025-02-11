@@ -12,10 +12,8 @@ const { consecutiveClaim } = require('./bin/ConsecutiveClaim');
 const { multiSendNC } = require('./bin/MultiSendNC');
 const { closeAccountBatch } = require('./bin/CloseAccount');
 const { claimTokenBatch } = require('./bin/ClaimToken');
-const { TokenChecker } = require('./bin/TokenChecker');
+const { multiCheckTokenBalances } = require('./bin/TokenChecker');
 const { logMessage, LogLevel } = require('./bin/Logger')
-
-const logger = require("node-color-log");
 
 const logBox = blessed.box({
   top: 'top',
@@ -99,7 +97,7 @@ list.on('select', async (item, index) => {
       break;
     case 4:
       logMessage(LogLevel.INFO, 'Starting process...');
-      await TokenChecker.filterByWalletBalance();
+      await multiCheckTokenBalances();
       break;
     case 5:
       logMessage(LogLevel.INFO, 'Exiting...');
