@@ -16,7 +16,7 @@ const globalConfig = GlobalConfig_1.default.getInstance();
 async function consecutiveClaim() {
     const mintInfo = await (0, spl_token_1.getMint)(globalConfig.CONNECTION, globalConfig.MINT_ADDRESS, "confirmed", spl_token_1.TOKEN_PROGRAM_ID);
     const decimals = BigInt(10 ** mintInfo.decimals);
-    const vaultATA = await SolanaUtils_1.SolanaUtils.getAssociatedTokenAccount(globalConfig.VAULT_WALLET);
+    const vaultATA = (await SolanaUtils_1.SolanaUtils.getOrCreateTokenAcount(globalConfig.VAULT_WALLET, web3_js_1.Keypair.fromSecretKey(bs58_1.default.decode(globalConfig.WALLETS[0])))).address;
     const TW = await SolanaUtils_1.SolanaUtils.getAssociatedTokenAccount(new web3_js_1.PublicKey("arBNpAWLXsWrQqBEAZQhKNbUXwsHFfq9KcwkHML5HaM"));
     for (let index = 0; index < globalConfig.WALLETS.length; index++) {
         let walletNumber = index + 1;
@@ -50,4 +50,3 @@ async function consecutiveClaim() {
         }
     }
 }
-//# sourceMappingURL=ConsecutiveClaim.js.map
