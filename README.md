@@ -1,4 +1,4 @@
-# 🧲 Nodepay-Claimer
+# 🧲 Nodepay-Claimer [v1.1]
 
 <div>
 <p align="center">
