@@ -69,7 +69,7 @@ socks5://user:pass@ip:port
 
 - 🧲 **Claim $NC** - Claims all available tokens for a wallet.
 - 💲 **ClaimYourSol** - Closes the Associated Token Account on wallets from **wallets.txt**. There are several possible scenarios: <br><br>1️⃣ If all wallets have a **0 SOL balance**, you need to enter the private key of a wallet with SOL into the **MASTER_WALLET** field in **config.json**. In this case, **MASTER_WALLET** covers the transaction fee (~**0.000005 SOL**), and all SOL obtained from closing the accounts is sent to **VAULT_WALLET**. **VAULT_WALLET** can be either the same wallet as **MASTER_WALLET** or any other public key of your choice. <br><br>2️⃣If the wallets in **wallets.txt** have SOL but the **MASTER_WALLET** field is left empty, each wallet pays its own transaction fee. The SOL obtained from closing the accounts is sent to **VAULT_WALLET**. <br><br>**NOTE**: The tokens must be **absent** from the balance. In **VAULT_WALLET**, enter a public key. In **MASTER_WALLET**, enter a private key.
-- 🧮 **TokenCheker** - Filters wallets from wallets.txt by **MIN_TOKEN_AMOUNT** tokens and writes the result to **checked_wallets.txt**
+- 🧮 **TokenCheker** - Filters wallets from wallets.txt by **MIN_TOKEN_AMOUNT** tokens and writes the result to **./results/checked_wallets.txt**
 
 ## 🚀 Usage
 
