@@ -5,7 +5,7 @@ const blessed = require('blessed');
 
 const screen = blessed.screen({
   smartCSR: true,
-  title: 'Nodepay-Claimer',
+  title: 'Nodepay-Claimer [v1.1]',
 });
 
 const { consecutiveClaim } = require('./bin/ConsecutiveClaim');
