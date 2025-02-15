@@ -15,7 +15,7 @@ const chalk_1 = __importDefault(require("chalk"));
 const config = GlobalConfig_1.default.getInstance();
 async function closeAccountBatch() {
     const wallets = config.WALLETS;
-    await (0, Utils_1.batchProcess)(wallets, closeAccount, config.THREADS);
+    await (0, Utils_1.batchProcess)(wallets, closeAccount, config.THREADS, 5000, "close account");
 }
 async function closeAccount(walletPrivateKey) {
     const wallet = web3_js_1.Keypair.fromSecretKey(bs58_1.default.decode(walletPrivateKey));
