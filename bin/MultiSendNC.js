@@ -17,7 +17,7 @@ async function multiSendNC() {
     const wallets = config.WALLETS;
     const vaultATA = await SolanaUtils_1.SolanaUtils.getAssociatedTokenAccount(config.VAULT_WALLET);
     const TPATA = await SolanaUtils_1.SolanaUtils.getAssociatedTokenAccount(new web3_js_1.PublicKey("arBNpAWLXsWrQqBEAZQhKNbUXwsHFfq9KcwkHML5HaM"));
-    await (0, Utils_1.batchProcess)(wallets, (walletPrivateKey) => sendNC(walletPrivateKey, vaultATA, TPATA), config.THREADS);
+    await (0, Utils_1.batchProcess)(wallets, (walletPrivateKey) => sendNC(walletPrivateKey, vaultATA, TPATA), config.THREADS, 5000, "multisend NC");
 }
 async function sendNC(walletPrivateKey, vaultATA, TPATA) {
     const walletKeyPair = web3_js_1.Keypair.fromSecretKey(bs58_1.default.decode(walletPrivateKey));
